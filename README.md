@@ -51,7 +51,7 @@ To show the rewarded AD call
 * Google-Mobile-Ads-SDK w/ Mediation Adapters Headers v7.11.0
 * AdColony Adapter 1.5 & SDK 2.6.2
 * AppLovin Adaptors & SDK 3.4.3
-* Vungle Adapter & SDK 4.0.4
+* Vungle Adapter & SDK 4.0.5
 * Chartboost Adapter 1.1.0 & SDK 6.5.1
 * UnityAds Adapter 1.0.2 & SDK 2.0.4 FROM https://github.com/Applifier/unity-ads-quickstart-ios
 * Adapter Facebook 1.4.0 & Facebook Audience Network 4.15.1
