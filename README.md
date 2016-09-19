@@ -6,7 +6,8 @@ Show Admob ads with mediation (interstitial &amp; rewarded) from different provi
 
 ### HOW TO USE ###
 
-* You can find the latest .unitypackage in releases folder. Import this package in your project.
+* Download the lastest admobWithMediation.unitypackage from here: https://goo.gl/UFtxv9. 
+Import this package in your project.
 * The project contains the adaptors, sdk, manifest and xcode setup ready to use admob with AdColony, AppLovin, Chartboost, Facebook Audience Network, UnityADS and Vungle. You can write/use your own code to display ads or you can optionally use RshkAds.cs .
 * In case that you want to use RshkAds.cs, set your interstitial Ad Unit ID and rewarded Ad Unit ID for iOS and Android in RshkAds.cs (Line 41-45).
 * Create an empty GameObject and add RshkAds.cs to it as soon as possible (when the game launch, in your loading screen or in the first scene so it can start to fetch interstitials and rewarded ads ASAP).
