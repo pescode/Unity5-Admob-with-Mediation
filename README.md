@@ -6,7 +6,7 @@ Show Admob ads with mediation (interstitial &amp; rewarded) from different provi
 
 ### HOW TO USE ###
 
-* Download the lastest admobWithMediation.unitypackage from here: https://goo.gl/UFtxv9. 
+* Download the lastest admobWithMediation.unitypackage from here: https://goo.gl/HnYYOQ. 
 Import this package in your project.
 * The project contains the adaptors, sdk, manifest and xcode setup ready to use admob with AdColony, AppLovin, Chartboost, Facebook Audience Network, UnityADS and Vungle. You can write/use your own code to display ads or you can optionally use RshkAds.cs .
 * In case that you want to use RshkAds.cs, set your interstitial Ad Unit ID and rewarded Ad Unit ID for iOS and Android in RshkAds.cs (Line 41-45).
@@ -44,7 +44,7 @@ To show the rewarded AD call
 
 ### Plugins ###
 
-* GoogleMobileAds (Unity) v3.0.5 https://github.com/googleads/googleads-mobile-unity/releases . v3.0.6 has a bug on iOS after requesting Rewarded Ads.
+* GoogleMobileAds (Unity) v3.0.7 https://github.com/googleads/googleads-mobile-unity/releases .
 
 ### iOS ###
 

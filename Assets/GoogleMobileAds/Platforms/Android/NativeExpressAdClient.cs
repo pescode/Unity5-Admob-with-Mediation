@@ -1,4 +1,4 @@
-// Copyright (C) 2015 Google, Inc.
+// Copyright (C) 2016 Google, Inc.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -23,17 +23,17 @@ using UnityEngine;
 
 namespace GoogleMobileAds.Android
 {
-    internal class InterstitialClient : AndroidJavaProxy, IInterstitialClient
+    internal class NativeExpressAdClient : AndroidJavaProxy, INativeExpressAdClient
     {
-        private AndroidJavaObject interstitial;
+        private AndroidJavaObject nativeExpressAdView;
 
-        public InterstitialClient() : base(Utils.UnityAdListenerClassName)
+        public NativeExpressAdClient() : base(Utils.UnityAdListenerClassName)
         {
             AndroidJavaClass playerClass = new AndroidJavaClass(Utils.UnityActivityClassName);
             AndroidJavaObject activity =
                     playerClass.GetStatic<AndroidJavaObject>("currentActivity");
-            this.interstitial = new AndroidJavaObject(
-                Utils.InterstitialClassName, activity, this);
+            this.nativeExpressAdView = new AndroidJavaObject(
+                Utils.NativeExpressAdViewClassName, activity, this);
         }
 
         public event EventHandler<EventArgs> OnAdLoaded;
@@ -46,55 +46,45 @@ namespace GoogleMobileAds.Android
 
         public event EventHandler<EventArgs> OnAdLeavingApplication;
 
-        #region IGoogleMobileAdsInterstitialClient implementation
-
-        // Creates an interstitial ad.
-        public void CreateInterstitialAd(string adUnitId)
+        // Creates a native express ad view.
+        public void CreateNativeExpressAdView(string adUnitId, AdSize adSize, AdPosition position)
         {
-            this.interstitial.Call("create", adUnitId);
+            this.nativeExpressAdView.Call(
+                    "create",
+                    new object[3] { adUnitId, Utils.GetAdSizeJavaObject(adSize), (int)position });
         }
 
         // Loads an ad.
         public void LoadAd(AdRequest request)
         {
-            this.interstitial.Call("loadAd", Utils.GetAdRequestJavaObject(request));
+            this.nativeExpressAdView.Call("loadAd", Utils.GetAdRequestJavaObject(request));
         }
 
-        // Checks if interstitial has loaded.
-        public bool IsLoaded()
+        // Set the ad size for the native express ad view.
+        public void SetAdSize(AdSize adSize)
         {
-            return this.interstitial.Call<bool>("isLoaded");
+            this.nativeExpressAdView.Call("setAdSize", Utils.GetAdSizeJavaObject(adSize));
         }
 
-        // Presents the interstitial ad on the screen.
-        public void ShowInterstitial()
+        // Displays the native express ad view on the screen.
+        public void ShowNativeExpressAdView()
         {
-            this.interstitial.Call("show");
+            this.nativeExpressAdView.Call("show");
         }
 
-        // Destroys the interstitial ad.
-        public void DestroyInterstitial()
+        // Hides the native express ad view from the screen.
+        public void HideNativeExpressAdView()
         {
-            this.interstitial.Call("destroy");
+            this.nativeExpressAdView.Call("hide");
         }
 
-        // Sets IDefaultInAppPurchaseProcessor as PlayStorePurchaseListener on interstital ad.
-        public void SetDefaultInAppPurchaseProcessor(IDefaultInAppPurchaseProcessor processor)
+        // Destroys the native express ad view.
+        public void DestroyNativeExpressAdView()
         {
-            DefaultInAppPurchaseListener listener = new DefaultInAppPurchaseListener(processor);
-            this.interstitial.Call("setPlayStorePurchaseParams", listener, processor.AndroidPublicKey);
+            this.nativeExpressAdView.Call("destroy");
         }
 
-        // Sets ICustomInAppPurchaseProcessor as PlayStorePurchaseListener on interstital ad.
-        public void SetCustomInAppPurchaseProcessor(ICustomInAppPurchaseProcessor processor)
-        {
-            CustomInAppPurchaseListener listener = new CustomInAppPurchaseListener(processor);
-            this.interstitial.Call("setInAppPurchaseListener", listener);
-        }
-
-        #endregion
-
-        #region Callbacks from UnityInterstitialAdListener.
+        #region Callbacks from UnityAdListener.
 
         public void onAdLoaded()
         {
