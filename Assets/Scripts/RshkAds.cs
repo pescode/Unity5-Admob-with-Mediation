@@ -80,12 +80,12 @@ public class RshkAds : MonoBehaviour {
 			PlayerPrefs.SetInt ("InterstitialAdCount", InterstitialAdCount);
 			if (interstitial.IsLoaded ()) {
 				if (InterstitialAdCount >= InterstitialNextAdShow) {
-					if (!HasWatchedRewardedAds) {
+					//if (!HasWatchedRewardedAds) {
 						InterstitialAdCount = 0;
 						InterstitialNextAdShow = UnityEngine.Random.Range (3, 6);
 						PlayerPrefs.SetInt ("InterstitialNextAdShow", InterstitialNextAdShow);
 						interstitial.Show ();
-					}
+					//}
 				}
 			} else {
 				RequestInterstitial ();
