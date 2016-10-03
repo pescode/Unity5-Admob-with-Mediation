@@ -12,8 +12,9 @@ Import this package in your project.
 * In case that you want to use RshkAds.cs, set your interstitial Ad Unit ID and rewarded Ad Unit ID for iOS and Android in RshkAds.cs (Line 41-45).
 * Create an empty GameObject and add RshkAds.cs to it as soon as possible (when the game launch, in your loading screen or in the first scene so it can start to fetch interstitials and rewarded ads ASAP).
 * To setup your APPLOVIN SDK KEY for Android OPEN Plugins/Android/GoogleMobileAds/AndroidManifest.xml . Add your SDK on line 41.
-* To setup your APPLOVIN SDK KEY for iOS OPEN Editor/PostBuildProcess.cs. Add your SDK on line 115.
+* To setup your APPLOVIN SDK KEY for iOS OPEN Editor/PostBuildProcess.cs. Add your SDK on line 130.
 * If your want to use Facebook Audience Network setup your Facebook App ID and open Plugins/Android/GoogleMobileAds/AndroidManifest.xml. Add your ID on line 54 ex: fb123456789
+* To setup Facebook Audience Network on iOS open Editor/PostBuildProcess.cs and add your app name and id in lines 121, 124, 127
 * To display interstitial Ads just call RshkAds.ShowInterstitial() anywhere in your code. As soon as the ads closes in will fetch automatically another ad for you.
 * To use rewarded Ads you must do the following
 In your game logic, in the part where you want to know when the user has closed the rewarded ads and do something else (like give virtual coins or another revive) you must setup a listener like this
@@ -49,7 +50,7 @@ To show the rewarded AD call
 ### iOS ###
 
 * Google-Mobile-Ads-SDK w/ Mediation Adapters Headers v7.11.0
-* AdColony Adapter 1.5 & SDK 2.6.2
+* AdColony Adapter 1.5 & SDK 2.6.2. WARNING: ADCOLONY CURRENTLY DOES NOT SUPPORT BITCODE. IS THIS IS A PROBLEM FOR YOU, REMOVE THE FOLLOWING FILES ON PLUGINS/IOS : AdColony.framework, GADMAdapterAdColonyExtras.h, GADMAdapterAdColonyInitializer.h, libAdapterSDKAdColony
 * AppLovin Adaptors & SDK 3.4.3
 * Vungle Adapter & SDK 4.0.5
 * Chartboost Adapter 1.1.0 & SDK 6.5.1

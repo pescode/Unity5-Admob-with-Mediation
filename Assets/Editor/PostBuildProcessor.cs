@@ -74,6 +74,10 @@ public class PostBuildProcessor : MonoBehaviour
 	    proj.AddFrameworkToProject(target, "StoreKit.framework", true);
 	    proj.AddFrameworkToProject(target, "Webkit.framework", true);
 
+		//Analytics (optional for Google Analytics)
+		proj.AddFrameworkToProject(target, "CoreData.framework", true);
+		proj.AddFrameworkToProject(target, "libsqlite3.dylib", true);
+
 	    File.WriteAllText(projPath, proj.WriteToString());
 	}
 
@@ -110,6 +114,17 @@ public class PostBuildProcessor : MonoBehaviour
 
 			rootDict.CreateDict ("NSBluetoothPeripheralUsageDescription");
 			rootDict.SetString ("NSBluetoothPeripheralUsageDescription","Advertisement would like to use bluetooth.");
+
+			PlistElementArray bundleURLTypes = rootDict.CreateArray("CFBundleURLTypes");
+			PlistElementDict bundleURLTypesDic = bundleURLTypes.AddDict();
+			PlistElementArray bundleURLSchemes = bundleURLTypesDic.CreateArray("CFBundleURLSchemes");
+			bundleURLSchemes.AddString("fbYOUR-APP-ID");
+
+			rootDict.CreateDict ("FacebookAppID");
+			rootDict.SetString ("FacebookAppID","YOUR-APP-ID");
+
+			rootDict.CreateDict ("FacebookDisplayName");
+			rootDict.SetString ("FacebookDisplayName","YOUR-APP-NAME");
 
 			rootDict.CreateDict ("AppLovinSdkKey");
 			rootDict.SetString ("AppLovinSdkKey","YOUR-APPLOVIN-SDK-KEY-GOES-HERE");
