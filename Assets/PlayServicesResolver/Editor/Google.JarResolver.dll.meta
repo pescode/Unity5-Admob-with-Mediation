@@ -1,6 +1,10 @@
 fileFormatVersion: 2
-guid: ba839436e3f0a4da193d6ac9c61a6f8b
-timeCreated: 1476190510
+guid: 6a5358cc03874d268d5e60c35d20698c
+labels:
+- gvh
+- gvh_teditor
+- gvh_v1.2.1.0
+timeCreated: 1476206510
 licenseType: Pro
 PluginImporter:
   serializedVersion: 1
@@ -12,12 +16,13 @@ PluginImporter:
       enabled: 0
       settings: {}
     Editor:
-      enabled: 0
+      enabled: 1
       settings:
         DefaultValueInitialized: true
-    iOS:
-      enabled: 1
-      settings: {}
+    WindowsStoreApps:
+      enabled: 0
+      settings:
+        CPU: AnyCPU
   userData: 
   assetBundleName: 
   assetBundleVariant: 

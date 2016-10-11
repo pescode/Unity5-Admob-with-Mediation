@@ -45,12 +45,12 @@ To show the rewarded AD call
 
 ### Plugins ###
 
-* GoogleMobileAds (Unity) v3.0.7 https://github.com/googleads/googleads-mobile-unity/releases .
+* GoogleMobileAds (Unity) v3.1.0 https://github.com/googleads/googleads-mobile-unity/releases .
 
 ### iOS ###
 
 * Google-Mobile-Ads-SDK w/ Mediation Adapters Headers v7.11.0
-* AdColony Adapter 1.5 & SDK 2.6.2. WARNING: ADCOLONY CURRENTLY DOES NOT SUPPORT BITCODE. IS THIS IS A PROBLEM FOR YOU, REMOVE THE FOLLOWING FILES ON PLUGINS/IOS : AdColony.framework, GADMAdapterAdColonyExtras.h, GADMAdapterAdColonyInitializer.h, libAdapterSDKAdColony
+* AdColony Adapter 1.5 & SDK 2.6.2
 * AppLovin Adaptors & SDK 3.4.3
 * Vungle Adapter & SDK 4.0.5
 * Chartboost Adapter 1.1.0 & SDK 6.5.1
