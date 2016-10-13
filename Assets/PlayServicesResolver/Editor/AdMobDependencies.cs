@@ -58,17 +58,20 @@ public class AdMobDependencies : AssetPostprocessor
                 {"packageIds", new string[] { "extra-android-m2repository" }},
             });
 #elif UNITY_IOS
+
         Type iosResolver = Google.VersionHandler.FindClass(
             "Google.IOSResolver", "Google.IOSResolver");
         if (iosResolver == null) {
             return;
         }
+		/*
         Google.VersionHandler.InvokeStaticMethod(
             iosResolver, "AddPod",
             new object[] { "Google-Mobile-Ads-SDK" },
             namedArgs: new Dictionary<string, object>() {
                 { "version", "7.8+" }
             });
+            */
 #endif  // UNITY_IOS
     }
 

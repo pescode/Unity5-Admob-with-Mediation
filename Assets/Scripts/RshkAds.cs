@@ -14,16 +14,24 @@ using System;
 
 public class RshkAds : MonoBehaviour {
 	static RshkAds instance;
+
+	static int InterstitialRequestsTry = 0;
+	static int RewardedRequestsTry = 0;
+
+	static int InterstitialMinNextAdShow = 0;
+	static int InterstitialMaxNextAdShow = 4;
 	static int InterstitialNextAdShow = 1;
 	static int InterstitialAdCount = 0;
+
 	public static bool HasWatchedRewardedAds = false;
 	public delegate void actionRewardedCompleted();
 	public static event actionRewardedCompleted OnRewardedCompleted;
-	static string adUnitId = "";
+	static string adInterstitialUnitId = "";
 	static string adRewardedUnitId = "";
 	static InterstitialAd interstitial;
 	static RewardBasedVideoAd rewardBasedVideo;
 	static bool FirstTimeRewardedListeners = true;
+
 	// Use this for initialization
 	void Start () {
 		if (instance) {
@@ -35,35 +43,38 @@ public class RshkAds : MonoBehaviour {
 			InterstitialAdCount = PlayerPrefs.GetInt ("InterstitialAdCount", InterstitialAdCount);
 			InterstitialNextAdShow = PlayerPrefs.GetInt ("InterstitialNextAdShow", InterstitialNextAdShow);
 			#if UNITY_ANDROID
-			adUnitId = "YOUR-ANDROID-INTERSTITIAL-AD-UNIT-ID-GOES-HERE";
-			adRewardedUnitId = "YOUR-IOS-INTERSTITIAL-AD-UNIT-ID-GOES-HERE";
+			adInterstitialUnitId = "YOUR-ANDROID-INTERSTITIAL-AD-UNIT-ID-GOES-HERE";
+			adRewardedUnitId = "YOUR-ANDROID-REWARDED-AD-UNIT-ID-GOES-HERE";
 			#elif UNITY_IPHONE
-			adUnitId = "YOUR-ANDROID-REWARDED-AD-UNIT-ID-GOES-HERE";
+			adInterstitialUnitId = "YOUR-IOS-INTERSTITIAL-AD-UNIT-ID-GOES-HERE";
 			adRewardedUnitId = "YOUR-IOS-REWARDED-AD-UNIT-ID-GOES-HERE";
 			#else
 			adUnitId = "unexpected_platform";
 			#endif
 
-			RequestInterstitial ();
-			RequestRewarded ();
+			//RequestInterstitial ();
+			//RequestRewarded ();
 
 		}
 	}
 
 	static void RewardBasedVideo_OnAdLoaded (object sender, EventArgs e)
 	{
+		RewardedRequestsTry = 0;
 		Debug.Log ("**********************\n**********************\n REWARDED LOADED! \n " + e.ToString());
 	}
 
 	static void RewardBasedVideo_OnAdFailedToLoad (object sender, AdFailedToLoadEventArgs e)
 	{
 		Debug.Log ("**********************\n**********************\nFailed to load rewarded ad " + e.Message);
-		RequestRewarded ();
+		RewardedRequestsTry++;
+		if(RewardedRequestsTry < 3)
+			RequestRewarded ();
 	}
 
 	public static void RequestInterstitial(){
 		Debug.Log ("**********************\n**********************\nREQUESTING INTERSTITIAL");
-		interstitial = new InterstitialAd(adUnitId);
+		interstitial = new InterstitialAd(adInterstitialUnitId);
 		AdRequest request = new AdRequest.Builder().Build();
 		interstitial.LoadAd(request);
 		interstitial.OnAdOpening += InterstitialAdOpening;
@@ -82,7 +93,7 @@ public class RshkAds : MonoBehaviour {
 				if (InterstitialAdCount >= InterstitialNextAdShow) {
 					//if (!HasWatchedRewardedAds) {
 						InterstitialAdCount = 0;
-						InterstitialNextAdShow = UnityEngine.Random.Range (3, 6);
+						InterstitialNextAdShow = UnityEngine.Random.Range (InterstitialMinNextAdShow, InterstitialMaxNextAdShow);
 						PlayerPrefs.SetInt ("InterstitialNextAdShow", InterstitialNextAdShow);
 						interstitial.Show ();
 					//}
@@ -95,25 +106,30 @@ public class RshkAds : MonoBehaviour {
 
 	static void Interstitial_OnAdLoaded (object sender, EventArgs e)
 	{
+		InterstitialRequestsTry = 0;
 		Debug.Log ("**********************\n**********************\nINTERSTITIAL LOADED! \n " + e.ToString());
 	}
 
 	static void Interstitial_OnAdFailedToLoad (object sender, AdFailedToLoadEventArgs e)
 	{
 		Debug.Log ("**********************\n**********************\nFailed to load interstitial ad " + e.Message);
-		RequestInterstitial ();
+		InterstitialRequestsTry++;
+		if(InterstitialRequestsTry < 3)
+			RequestInterstitial ();
 	}
 
 	static void InterstitialAdOpening(object sender, EventArgs args)
 	{
 		Debug.Log ("**********************\n**********************\nInterstitial opening");
 		AudioListener.pause = true;
+		Time.timeScale = 0;
 	}
 
 	static void InterstitialAdClose(object sender, EventArgs args)
 	{
 		Debug.Log ("**********************\n**********************\nInterstitial close");
 		AudioListener.pause = false;
+		Time.timeScale = 1;
 		interstitial.Destroy ();
 		RequestInterstitial ();
 	}
@@ -128,12 +144,20 @@ public class RshkAds : MonoBehaviour {
 			rewardBasedVideo.OnAdClosed += RewardedAdClose;
 			rewardBasedVideo.OnAdRewarded += RewardedAdCompleted;
 			rewardBasedVideo.OnAdLoaded += RewardBasedVideo_OnAdLoaded;
+			rewardBasedVideo.OnAdRewarded += RewardBasedVideo_OnAdRewarded;
 			FirstTimeRewardedListeners = false;
 		}
 
 		AdRequest request = new AdRequest.Builder().Build();
 		rewardBasedVideo.LoadAd(request, adRewardedUnitId);
 
+	}
+
+	static void RewardBasedVideo_OnAdRewarded (object sender, Reward e)
+	{
+		Debug.Log ("**********************\n**********************\nUSER HAS BEEN REWARDED! \n ");
+		// NOTE: We don't give extra lifes or virtual coins here. We use RewardedAdClose to reward
+		// the user even if he didn't watch the full video ad
 	}
 
 	public static bool IsRewardedAdsAvailable()

@@ -4,6 +4,9 @@ Interstitial & Rewarded Ads
 
 Show Admob ads with mediation (interstitial &amp; rewarded) from different providers like AdColony, AppLovin, Chartboost, Facebook Audience Network, UnityADS &amp; Vungle
 
+### Current version 1.0.4 ###
+Special notes: Google Mobile Ads 3.1.0 now includes a script called AdMobDependencies (Assets/PlayServicesResolver/Editor). I commented the lines 67 - 74 because I wasn't able to prepare a build on iOS, I always receive an error with POD.
+
 ### HOW TO USE ###
 
 * Download the lastest admobWithMediation.unitypackage from here: https://goo.gl/HnYYOQ. 
@@ -49,7 +52,7 @@ To show the rewarded AD call
 
 ### iOS ###
 
-* Google-Mobile-Ads-SDK w/ Mediation Adapters Headers v7.11.0
+* Google-Mobile-Ads-SDK w/ Mediation Adapters Headers v7.12.1
 * AdColony Adapter 1.5 & SDK 2.6.2
 * AppLovin Adaptors & SDK 3.4.3
 * Vungle Adapter & SDK 4.0.5
