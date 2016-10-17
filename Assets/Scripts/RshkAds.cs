@@ -128,6 +128,12 @@ public class RshkAds : MonoBehaviour {
 	static void InterstitialAdClose(object sender, EventArgs args)
 	{
 		Debug.Log ("**********************\n**********************\nInterstitial close");
+		instance.StartCoroutine (InterstitialDone ());
+	}
+
+	static IEnumerator InterstitialDone()
+	{
+		yield return new WaitForSeconds (1f);
 		AudioListener.pause = false;
 		Time.timeScale = 1;
 		interstitial.Destroy ();
@@ -181,6 +187,12 @@ public class RshkAds : MonoBehaviour {
 	static void RewardedAdClose(object sender, EventArgs args)
 	{
 		Debug.Log ("**********************\n**********************\nRewarded Ad Close");
+		instance.StartCoroutine (RewardedDone ());
+	}
+	// We need this to avoid errors on Android
+	static IEnumerator RewardedDone()
+	{
+		yield return new WaitForSeconds (1f);
 		AudioListener.pause = false;
 		OnRewardedCompleted();
 		RequestRewarded ();

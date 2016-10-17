@@ -4,8 +4,11 @@ Interstitial & Rewarded Ads
 
 Show Admob ads with mediation (interstitial &amp; rewarded) from different providers like AdColony, AppLovin, Chartboost, Facebook Audience Network, UnityADS &amp; Vungle
 
-### Current version 1.0.4 ###
-Special notes: Google Mobile Ads 3.1.0 now includes a script called AdMobDependencies (Assets/PlayServicesResolver/Editor). I commented the lines 67 - 74 because I wasn't able to prepare a build on iOS, I always receive an error with POD.
+### Current version 1.0.5 ###
+I've found that on Android we need to wait a little time before doing something in the game when the Ad close. I've added a coroutine in RshkAds.cs to avoid problem with this.
+
+### Version 1.0.4 ###
+Special notes: Google Mobile Ads 3.1.0 now includes a script called AdMobDependencies (Assets/PlayServicesResolver/Editor). I've commented the lines 67 - 74 because I wasn't able to prepare a build on iOS, I always receive an error with POD.
 
 ### HOW TO USE ###
 
