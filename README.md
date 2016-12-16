@@ -4,7 +4,10 @@ Interstitial & Rewarded Ads
 
 Show Admob ads with mediation (interstitial &amp; rewarded) from different providers like AdColony, AppLovin, Chartboost, Facebook Audience Network, UnityADS &amp; Vungle
 
-### Current version 1.0.5 ###
+### Current version 1.0.6 ###
+Updated to Google Mobile Ads 3.1.2.
+
+### Version 1.0.5 ###
 I've found that on Android we need to wait a little time before doing something in the game when the Ad close. I've added a coroutine in RshkAds.cs to avoid problem with this.
 
 ### Version 1.0.4 ###
@@ -51,7 +54,7 @@ To show the rewarded AD call
 
 ### Plugins ###
 
-* GoogleMobileAds (Unity) v3.1.0 https://github.com/googleads/googleads-mobile-unity/releases .
+* GoogleMobileAds (Unity) v3.1.2 https://github.com/googleads/googleads-mobile-unity/releases .
 
 ### iOS ###
 

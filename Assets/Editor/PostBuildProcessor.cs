@@ -1,4 +1,4 @@
-#if UNITY_5
+#if UNITY_5 || UNITY_IOS
 /*
 Author: Victor Corvalan @pescadon
 pescode.wordpress.com
