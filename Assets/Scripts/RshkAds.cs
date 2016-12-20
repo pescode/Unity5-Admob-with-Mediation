@@ -46,17 +46,17 @@ public class RshkAds : MonoBehaviour {
 			InterstitialAdCount = PlayerPrefs.GetInt ("InterstitialAdCount", InterstitialAdCount);
 			InterstitialNextAdShow = PlayerPrefs.GetInt ("InterstitialNextAdShow", InterstitialNextAdShow);
 			#if UNITY_ANDROID
-			adInterstitialUnitId = "ca-app-pub-3549937589288689/7487592452";
-			adRewardedUnitId = "ca-app-pub-3549937589288689/8964325653";
+			adInterstitialUnitId = "YOUR-ANDROID-INTERSTITIAL-UNIT-ID";
+			adRewardedUnitId = "YOUR-ANDROID-REWARDED-UNIT-ID";
 			#elif UNITY_IPHONE
-			adInterstitialUnitId = "ca-app-pub-3549937589288689/5487652055";
-			adRewardedUnitId = "ca-app-pub-3549937589288689/6964385250";
+			adInterstitialUnitId = "YOUR-IOS-INTERSTITIAL-UNIT-ID";
+			adRewardedUnitId = "YOUR-IOS-REWARDED-UNIT-ID";
 			#else
 			adUnitId = "unexpected_platform";
 			#endif
 
-			//RequestInterstitial ();
-			//RequestRewarded ();
+			RequestInterstitial ();
+			RequestRewarded ();
 
 		}
 	}
@@ -64,9 +64,11 @@ public class RshkAds : MonoBehaviour {
 	// Returns an ad request with custom ad targeting.
 	static AdRequest CreateAdRequest()
 	{
+		return new AdRequest.Builder ().Build ();
+		// For testing
 		return new AdRequest.Builder()
 			.AddTestDevice(AdRequest.TestDeviceSimulator)
-			.AddTestDevice("0123456789ABCDEF0123456789ABCDEF")
+			.AddTestDevice("C626D9E7427CCCCD80EAF225BD07D0B4")
 			.AddKeyword("game")
 			.SetGender(GoogleMobileAds.Api.Gender.Male)
 			.SetBirthday(new DateTime(1985, 1, 1))

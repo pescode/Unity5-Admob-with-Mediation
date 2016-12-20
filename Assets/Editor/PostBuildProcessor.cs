@@ -118,16 +118,16 @@ public class PostBuildProcessor : MonoBehaviour
 			PlistElementArray bundleURLTypes = rootDict.CreateArray("CFBundleURLTypes");
 			PlistElementDict bundleURLTypesDic = bundleURLTypes.AddDict();
 			PlistElementArray bundleURLSchemes = bundleURLTypesDic.CreateArray("CFBundleURLSchemes");
-			bundleURLSchemes.AddString("fb1086978318031294");
+			bundleURLSchemes.AddString("fbYOUR-FB-ID");
 
 			rootDict.CreateDict ("FacebookAppID");
-			rootDict.SetString ("FacebookAppID","1086978318031294");
+			rootDict.SetString ("FacebookAppID","YOUR-FB-ID");
 
 			rootDict.CreateDict ("FacebookDisplayName");
 			rootDict.SetString ("FacebookDisplayName","Nuumbers");
 
 			rootDict.CreateDict ("AppLovinSdkKey");
-			rootDict.SetString ("AppLovinSdkKey","f-4eiA_Xu8ISLMBfF-54r0yVVZowTdZ8cenJqnrhw88FVKvlI_q7_ndVKQPp2-yeckyQUo7OwGdPaX9uWz0Wld");
+			rootDict.SetString ("AppLovinSdkKey","YOUR-SDK-KEY");
 
 			// Write to file
 			File.WriteAllText(plistPath, plist.WriteToString());

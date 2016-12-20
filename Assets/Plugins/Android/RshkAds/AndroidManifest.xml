@@ -12,7 +12,7 @@ roshkastudios.com
     package="com.google.unity"
     android:versionName="1.0"
     android:versionCode="1">
-  	<uses-sdk android:minSdkVersion="9"
+  	<uses-sdk android:minSdkVersion="11"
       android:targetSdkVersion="19" />
   	<!-- Google Mobile Ads Permissions -->
   	<uses-permission android:name="android.permission.INTERNET"/>
@@ -36,7 +36,7 @@ roshkastudios.com
 
 		<!-- AppLovin -->
 	  	<meta-data android:name="applovin.sdk.key"
-	       android:value="f-4eiA_Xu8ISLMBfF-54r0yVVZowTdZ8cenJqnrhw88FVKvlI_q7_ndVKQPp2-yeckyQUo7OwGdPaX9uWz0Wld"  />
+	       android:value="YOUR-SDK-KEY"  />
 	    <activity android:name="com.applovin.adview.AppLovinInterstitialActivity" />
 		<activity android:name="com.applovin.adview.AppLovinConfirmationActivity" />
 
@@ -49,14 +49,15 @@ roshkastudios.com
 	    android:theme="@android:style/Theme.Translucent.NoTitleBar.Fullscreen"/>
 
 	    <!-- Facebook Audience Network -->
-	    <meta-data android:name="com.facebook.sdk.ApplicationId" android:value="fbYOURFACEBOOKIDGOESHERE"/>
+	    <meta-data android:name="com.facebook.sdk.ApplicationId" android:value="fbYOUR-FB-ID"/>
 
 	    <!-- Vungle -->
-	    <activity android:name="com.vungle.publisher.VideoFullScreenAdActivity"
-		android:configChanges="keyboardHidden|orientation|screenSize"
+		<activity android:name="com.vungle.publisher.VideoFullScreenAdActivity"
+		android:configChanges="keyboardHidden|orientation|screenSize|screenLayout|smallestScreenSize"
 		android:theme="@android:style/Theme.NoTitleBar.Fullscreen"/>
+
 		<activity android:name="com.vungle.publisher.MraidFullScreenAdActivity"
-		android:configChanges="keyboardHidden|orientation|screenSize"
+		android:configChanges="keyboardHidden|orientation|screenSize|screenLayout|smallestScreenSize"
 		android:theme="@android:style/Theme.Translucent.NoTitleBar.Fullscreen"/>
   </application>
 </manifest>

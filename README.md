@@ -80,7 +80,10 @@ https://firebase.google.com/docs/admob/ios/mediation-networks
 https://support.vungle.com/hc/en-us/articles/208073977
 * Vungle SDK 4.0.9 
 https://v.vungle.com/sdk
-* UnityAds Adapter 1.0.2 & SDK 2.0.4 FROM https://github.com/Applifier/unity-ads-quickstart-ios
+* UnityAds SDK 2.0.7
+https://github.com/Unity-Technologies/unity-ads-ios/releases
+* UnityAds Adapter 2.0.4.0 
+https://firebase.google.com/docs/admob/android/mediation-networks
 
 ### ANDROID ###
 
@@ -99,8 +102,14 @@ https://answers.chartboost.com/hc/en-us/articles/209756523-Mediation-AdMob
 https://firebase.google.com/docs/admob/ios/mediation-networks
 * Facebook SDK 4.17.0 
 https://developers.facebook.com/docs/android/downloads/
-* UnityAds 2.0.2
+* UnityAds 2.0.7
+https://github.com/Unity-Technologies/unity-ads-ios/releases
+* UnityAds Adapter
+https://firebase.google.com/docs/admob/android/mediation-networks
 * Vungle SDK 4.0.3 
 https://v.vungle.com/sdk
 * Vungle Adapter 2.1.0 
 https://support.vungle.com/hc/en-us/articles/207604108
+
+### NOTE ###
+If you receive something like "The imported type `Google.JarResolver.PlayServicesSupport' is defined multiple times" just delete JarResolverLib
