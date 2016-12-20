@@ -1,18 +1,17 @@
 //
-//  AppLovinCustomEventBanner.h
-//  AppLovin AdMob Mediation
-//
-//  Created by David Anderson on 11/29/12.
-//  Updated by Matt Szaro on 7/10/13.
-//  Copyright (c) 2013 AppLovin. All rights reserved.
+// AppLovin <--> AdMob Network Adaptors
 //
 
 @import GoogleMobileAds;
+@import UIKit;
+@import AppLovinSDK;
 
-#import <UIKit/UIKit.h>
-#import "ALAdService.h"
-#import "ALInterstitialAd.h"
+// Use the below import statements if not integrating our SDK as a first-class framework
+//#import "ALAdService.h"
+//#import "ALInterstitialAd.h"
 
 @interface AppLovinCustomEventInter : NSObject <GADCustomEventInterstitial, ALAdLoadDelegate, ALAdDisplayDelegate>
+
 @property (strong, atomic) ALAd* appLovinAd;
+
 @end

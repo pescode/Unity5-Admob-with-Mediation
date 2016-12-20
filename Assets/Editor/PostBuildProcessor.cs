@@ -1,4 +1,4 @@
-#if UNITY_5 || UNITY_IOS
+#if UNITY_IOS
 /*
 Author: Victor Corvalan @pescadon
 pescode.wordpress.com
@@ -118,16 +118,16 @@ public class PostBuildProcessor : MonoBehaviour
 			PlistElementArray bundleURLTypes = rootDict.CreateArray("CFBundleURLTypes");
 			PlistElementDict bundleURLTypesDic = bundleURLTypes.AddDict();
 			PlistElementArray bundleURLSchemes = bundleURLTypesDic.CreateArray("CFBundleURLSchemes");
-			bundleURLSchemes.AddString("fbYOUR-APP-ID");
+			bundleURLSchemes.AddString("fb1086978318031294");
 
 			rootDict.CreateDict ("FacebookAppID");
-			rootDict.SetString ("FacebookAppID","YOUR-APP-ID");
+			rootDict.SetString ("FacebookAppID","1086978318031294");
 
 			rootDict.CreateDict ("FacebookDisplayName");
-			rootDict.SetString ("FacebookDisplayName","YOUR-APP-NAME");
+			rootDict.SetString ("FacebookDisplayName","Nuumbers");
 
 			rootDict.CreateDict ("AppLovinSdkKey");
-			rootDict.SetString ("AppLovinSdkKey","YOUR-APPLOVIN-SDK-KEY-GOES-HERE");
+			rootDict.SetString ("AppLovinSdkKey","f-4eiA_Xu8ISLMBfF-54r0yVVZowTdZ8cenJqnrhw88FVKvlI_q7_ndVKQPp2-yeckyQUo7OwGdPaX9uWz0Wld");
 
 			// Write to file
 			File.WriteAllText(plistPath, plist.WriteToString());

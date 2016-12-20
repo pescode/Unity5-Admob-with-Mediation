@@ -9,8 +9,10 @@ roshkastudios.com
 using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using GoogleMobileAds;
 using GoogleMobileAds.Api;
 using System;
+using UnityEngine.Analytics;
 
 public class RshkAds : MonoBehaviour {
 	static RshkAds instance;
@@ -19,13 +21,14 @@ public class RshkAds : MonoBehaviour {
 	static int RewardedRequestsTry = 0;
 
 	static int InterstitialMinNextAdShow = 0;
-	static int InterstitialMaxNextAdShow = 4;
+	static int InterstitialMaxNextAdShow = 2;
 	static int InterstitialNextAdShow = 1;
 	static int InterstitialAdCount = 0;
 
 	public static bool HasWatchedRewardedAds = false;
 	public delegate void actionRewardedCompleted();
 	public static event actionRewardedCompleted OnRewardedCompleted;
+
 	static string adInterstitialUnitId = "";
 	static string adRewardedUnitId = "";
 	static InterstitialAd interstitial;
@@ -43,11 +46,11 @@ public class RshkAds : MonoBehaviour {
 			InterstitialAdCount = PlayerPrefs.GetInt ("InterstitialAdCount", InterstitialAdCount);
 			InterstitialNextAdShow = PlayerPrefs.GetInt ("InterstitialNextAdShow", InterstitialNextAdShow);
 			#if UNITY_ANDROID
-			adInterstitialUnitId = "YOUR-ANDROID-INTERSTITIAL-AD-UNIT-ID-GOES-HERE";
-			adRewardedUnitId = "YOUR-ANDROID-REWARDED-AD-UNIT-ID-GOES-HERE";
+			adInterstitialUnitId = "ca-app-pub-3549937589288689/7487592452";
+			adRewardedUnitId = "ca-app-pub-3549937589288689/8964325653";
 			#elif UNITY_IPHONE
-			adInterstitialUnitId = "YOUR-IOS-INTERSTITIAL-AD-UNIT-ID-GOES-HERE";
-			adRewardedUnitId = "YOUR-IOS-REWARDED-AD-UNIT-ID-GOES-HERE";
+			adInterstitialUnitId = "ca-app-pub-3549937589288689/5487652055";
+			adRewardedUnitId = "ca-app-pub-3549937589288689/6964385250";
 			#else
 			adUnitId = "unexpected_platform";
 			#endif
@@ -56,6 +59,20 @@ public class RshkAds : MonoBehaviour {
 			//RequestRewarded ();
 
 		}
+	}
+
+	// Returns an ad request with custom ad targeting.
+	static AdRequest CreateAdRequest()
+	{
+		return new AdRequest.Builder()
+			.AddTestDevice(AdRequest.TestDeviceSimulator)
+			.AddTestDevice("0123456789ABCDEF0123456789ABCDEF")
+			.AddKeyword("game")
+			.SetGender(GoogleMobileAds.Api.Gender.Male)
+			.SetBirthday(new DateTime(1985, 1, 1))
+			.TagForChildDirectedTreatment(false)
+			.AddExtra("color_bg", "9B30FF")
+			.Build();
 	}
 
 	static void RewardBasedVideo_OnAdLoaded (object sender, EventArgs e)
@@ -75,15 +92,16 @@ public class RshkAds : MonoBehaviour {
 	public static void RequestInterstitial(){
 		Debug.Log ("**********************\n**********************\nREQUESTING INTERSTITIAL");
 		interstitial = new InterstitialAd(adInterstitialUnitId);
-		AdRequest request = new AdRequest.Builder().Build();
-		interstitial.LoadAd(request);
 		interstitial.OnAdOpening += InterstitialAdOpening;
 		interstitial.OnAdClosed += InterstitialAdClose;
 		interstitial.OnAdFailedToLoad += Interstitial_OnAdFailedToLoad;
 		interstitial.OnAdLoaded += Interstitial_OnAdLoaded;
+		//AdRequest request = new AdRequest.Builder().Build();
+		interstitial.LoadAd(CreateAdRequest());
+
 	}
 
-	public static void ShowInterstitial()
+	public static void ShowInterstitial(string tag = "interstitial")
 	{
 		Debug.Log ("**********************\n**********************\nSHOW INTERSTITIAL! \n " + (InterstitialAdCount+1) + "=" + InterstitialNextAdShow);
 		//if (!IAP.IsAdsRemoved ()) {
@@ -91,12 +109,15 @@ public class RshkAds : MonoBehaviour {
 			PlayerPrefs.SetInt ("InterstitialAdCount", InterstitialAdCount);
 			if (interstitial.IsLoaded ()) {
 				if (InterstitialAdCount >= InterstitialNextAdShow) {
-					//if (!HasWatchedRewardedAds) {
+					if (!HasWatchedRewardedAds) {
 						InterstitialAdCount = 0;
 						InterstitialNextAdShow = UnityEngine.Random.Range (InterstitialMinNextAdShow, InterstitialMaxNextAdShow);
 						PlayerPrefs.SetInt ("InterstitialNextAdShow", InterstitialNextAdShow);
 						interstitial.Show ();
-					//}
+						Analytics.CustomEvent ("ADS Interstitial", new Dictionary<string, object> {
+							{ "Tag", tag }
+						});
+					}
 				}
 			} else {
 				RequestInterstitial ();
@@ -122,7 +143,7 @@ public class RshkAds : MonoBehaviour {
 	{
 		Debug.Log ("**********************\n**********************\nInterstitial opening");
 		AudioListener.pause = true;
-		Time.timeScale = 0;
+		Time.timeScale = 0.02f;		//optional to pause the game
 	}
 
 	static void InterstitialAdClose(object sender, EventArgs args)
@@ -135,7 +156,7 @@ public class RshkAds : MonoBehaviour {
 	{
 		yield return new WaitForSeconds (1f);
 		AudioListener.pause = false;
-		Time.timeScale = 1;
+		Time.timeScale = 1;			//optional to continue the game
 		interstitial.Destroy ();
 		RequestInterstitial ();
 	}
@@ -171,9 +192,13 @@ public class RshkAds : MonoBehaviour {
 		return rewardBasedVideo.IsLoaded ();
 	}
 
-	public static void ShowRewarded()
+	public static void ShowRewarded(string tag = "rewarded")
 	{
 		Debug.Log ("**********************\n**********************\nSHOW REWARDED! \n ");
+		Analytics.CustomEvent("ADS Rewarded", new Dictionary<string, object>
+			{
+				{ "Tag", tag }
+			});
 		HasWatchedRewardedAds = true;
 		InterstitialAdCount = 0;
 		rewardBasedVideo.Show();
