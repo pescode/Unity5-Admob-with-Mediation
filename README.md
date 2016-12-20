@@ -6,6 +6,7 @@ Show Admob ads with mediation (interstitial &amp; rewarded) from different provi
 
 ### Current version 1.0.6 ###
 Updated to Google Mobile Ads 3.1.3 and SDK+Adapter mediation libs. Improvements and bug fixes.
+Added support for Banners.
 
 ### Version 1.0.5 ###
 I've found that on Android we need to wait a little time before doing something in the game when the Ad close. I've added a coroutine in RshkAds.cs to avoid problem with this.
@@ -51,6 +52,15 @@ Before showing your special button like WATCH AD FOR 50 COINS or CONTINUE GAME y
 To show the rewarded AD call
 
  RshkAds.ShowRewarded()
+
+* If you want to display banner just call
+RshkAds.ShowBanner();
+
+To hide banner
+RshkAds.HideBanner();
+
+To destroy a banner (if you want Admob to try to load from another network)
+RshkAds.DestroyBanner();
 
 ### Plugins ###
 

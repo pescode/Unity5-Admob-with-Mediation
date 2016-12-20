@@ -37,4 +37,19 @@ public class TestButtons : MonoBehaviour {
 	{
 		RshkAds.RequestInterstitial ();
 	}
+
+	public void ClickShowBanner()
+	{
+		RshkAds.ShowBanner ();
+	}
+
+	public void ClickHideBanner()
+	{
+		RshkAds.HideBanner ();
+	}
+
+	public void ClickDestroyBanner()
+	{
+		RshkAds.DestroyBanner ();
+	}
 }

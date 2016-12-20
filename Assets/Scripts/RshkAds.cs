@@ -19,6 +19,7 @@ public class RshkAds : MonoBehaviour {
 
 	static int InterstitialRequestsTry = 0;
 	static int RewardedRequestsTry = 0;
+	static int BannerRequestsTry = 0;
 
 	static int InterstitialMinNextAdShow = 0;
 	static int InterstitialMaxNextAdShow = 2;
@@ -31,10 +32,14 @@ public class RshkAds : MonoBehaviour {
 
 	static string adInterstitialUnitId = "";
 	static string adRewardedUnitId = "";
+	static string adBannerUnitId = "";
 	static InterstitialAd interstitial;
 	static RewardBasedVideoAd rewardBasedVideo;
+	static BannerView banner;
 	static bool FirstTimeRewardedListeners = true;
 
+	static bool isBannerLoaded = false;
+	static bool isBannerShowing = false;
 	// Use this for initialization
 	void Start () {
 		if (instance) {
@@ -48,16 +53,15 @@ public class RshkAds : MonoBehaviour {
 			#if UNITY_ANDROID
 			adInterstitialUnitId = "YOUR-ANDROID-INTERSTITIAL-UNIT-ID";
 			adRewardedUnitId = "YOUR-ANDROID-REWARDED-UNIT-ID";
+			adBannerUnitId = "YOUR-ANDROID-BANNER-UNIT-ID";
 			#elif UNITY_IPHONE
 			adInterstitialUnitId = "YOUR-IOS-INTERSTITIAL-UNIT-ID";
 			adRewardedUnitId = "YOUR-IOS-REWARDED-UNIT-ID";
-			#else
-			adUnitId = "unexpected_platform";
+			adBannerUnitId = "YOUR-IOS-BANNER-UNIT-ID";
 			#endif
 
 			RequestInterstitial ();
 			RequestRewarded ();
-
 		}
 	}
 
@@ -231,5 +235,64 @@ public class RshkAds : MonoBehaviour {
 		double amount = args.Amount;
 		Debug.Log ("**********************\n**********************\nUser rewarded with: " + amount.ToString() + " " + type);
 	}
+
+	public static void ShowBanner()
+	{
+		//if (!IAP.IsAdsRemoved ()) {
+		if (!isBannerLoaded) {
+			RequestBanner ();
+		} else if(!isBannerShowing){
+			banner.Show ();
+			isBannerShowing = true;
+		}
+		//}
+	}
+
+	public static void HideBanner()
+	{
+		if (isBannerShowing) {
+			banner.Hide ();
+			isBannerShowing = false;
+		}
+	}
+
+	public static void DestroyBanner()
+	{
+		if (isBannerLoaded) {
+			banner.Destroy ();
+			isBannerLoaded = false;
+			isBannerShowing = false;
+		}
+	}
+
+	public static void RequestBanner()
+	{
+		// Create a 320x50 banner at the top of the screen.
+		banner = new BannerView(adBannerUnitId, AdSize.Banner, AdPosition.Bottom);
+		banner.OnAdFailedToLoad += Banner_OnAdFailedToLoad;
+		banner.OnAdLoaded += Banner_OnAdLoaded;
+		// Load the banner with the request.
+		banner.LoadAd(CreateAdRequest());
+	}
+
+	static void Banner_OnAdLoaded (object sender, EventArgs e)
+	{
+		BannerRequestsTry = 0;
+		isBannerLoaded = true;
+		isBannerShowing = true;
+		Debug.Log ("**********************\n**********************\nBANNER LOADED! \n " + e.ToString());
+	}
+
+	static void Banner_OnAdFailedToLoad (object sender, AdFailedToLoadEventArgs e)
+	{
+		Debug.Log ("**********************\n**********************\nFailed to load banner ad " + e.Message);
+		BannerRequestsTry++;
+		banner.Destroy ();
+		isBannerLoaded = false;
+		isBannerShowing = false;
+		if(BannerRequestsTry < 3)
+			RequestBanner ();
+	}
+
 		
 }
